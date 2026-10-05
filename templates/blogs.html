@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>All Blogs - My Blog</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+
+    <style>
+
+        /* =========================================
+           ALL BLOGS PAGE
+        ========================================= */
+
+        .blogs-page {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           PAGE HERO
+        ========================================= */
+
+        .blogs-hero {
+            position: relative;
+
+            padding: 38px 30px;
+
+            margin-bottom: 25px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5faf7 0%,
+                    #fbfaf5 100%
+                );
+
+            border: 1px solid #e1e8e3;
+
+            overflow: hidden;
+        }
+
+
+        .blogs-hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            border-radius: 50%;
+
+            background: rgba(
+                82,
+                104,
+                94,
+                0.07
+            );
+
+            right: -45px;
+            top: -100px;
+        }
+
+
+        .blogs-hero h2 {
+            position: relative;
+            z-index: 2;
+
+            margin: 0 0 8px;
+
+            font-family: Georgia, serif;
+
+            font-size: 32px;
+
+            color: #293a32;
+        }
+
+
+        .blogs-hero p {
+            position: relative;
+            z-index: 2;
+
+            margin: 0;
+
+            color: #707a74;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           SEARCH / FILTER CARD
+        ========================================= */
+
+        .search-section {
+            margin-bottom: 25px;
+
+            padding: 22px;
+
+            background: white;
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 5px 20px rgba(
+                    0,
+                    0,
+                    0,
+                    0.045
+                );
+        }
+
+
+        .search-heading {
+            margin: 0 0 15px;
+
+            font-family: Georgia, serif;
+
+            color: #34463d;
+
+            font-size: 20px;
+        }
+
+
+        .search-form {
+            display: grid;
+
+            grid-template-columns:
+                minmax(220px, 2fr)
+                minmax(150px, 1fr)
+                minmax(150px, 1fr)
+                auto;
+
+            gap: 10px;
+
+            align-items: center;
+        }
+
+
+        .search-form input,
+        .search-form select {
+            width: 100%;
+
+            height: 43px;
+
+            padding: 0 13px;
+
+            border: 1px solid #d6ded9;
+
+            border-radius: 9px;
+
+            background: #fafcfb;
+
+            color: #39453f;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+
+        .search-form input:focus,
+        .search-form select:focus {
+            border-color: #52685e;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    82,
+                    104,
+                    94,
+                    0.10
+                );
+        }
+
+
+        .search-form button {
+            height: 43px;
+
+            padding: 0 20px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #52685e;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .search-form button:hover {
+            background: #3d554b;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           RESULT INFORMATION
+        ========================================= */
+
+        .result-info {
+            margin: 0 0 20px;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background: #f4f7f5;
+
+            border: 1px solid #e2e9e4;
+
+            color: #68736c;
+
+            font-size: 13px;
+        }
+
+
+        .result-info strong {
+            color: #40564b;
+        }
+
+
+        /* =========================================
+           BLOG CARD
+        ========================================= */
+
+        .blog-post {
+            background: white;
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 17px;
+
+            padding: 23px;
+
+            margin-bottom: 23px;
+
+            box-shadow:
+                0 5px 20px rgba(
+                    0,
+                    0,
+                    0,
+                    0.045
+                );
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+
+        .blog-post:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 11px 30px rgba(
+                    0,
+                    0,
+                    0,
+                    0.075
+                );
+        }
+
+
+        /* =========================================
+           TITLE
+        ========================================= */
+
+        .blog-post h3 {
+            margin: 0 0 13px;
+
+            font-family: Georgia, serif;
+
+            font-size: 25px;
+
+            line-height: 1.35;
+
+            color: #2d4237;
+        }
+
+
+        .blog-title-link {
+            color: #2d4237;
+
+            text-decoration: none;
+
+            transition: color 0.2s;
+        }
+
+
+        .blog-title-link:hover {
+            color: #52685e;
+        }
+
+
+        /* =========================================
+           IMAGE
+        ========================================= */
+
+        .blog-image {
+            width: 100%;
+
+            height: 300px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            margin: 5px 0 18px;
+
+            display: block;
+        }
+
+
+        /* =========================================
+           CATEGORY
+        ========================================= */
+
+        .blog-category {
+            display: inline-block;
+
+            padding: 5px 11px;
+
+            margin-bottom: 14px;
+
+            border-radius: 20px;
+
+            background: #e9f0eb;
+
+            color: #486052;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           BLOG CONTENT
+        ========================================= */
+
+        .blog-content {
+            color: #59635d;
+
+            font-size: 15px;
+
+            line-height: 1.75;
+
+            margin-bottom: 17px;
+
+            max-height: 125px;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================
+           BLOG META
+        ========================================= */
+
+        .blog-meta {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 14px 0;
+
+            border-top: 1px solid #e7ece9;
+
+            color: #737c76;
+
+            font-size: 13px;
+        }
+
+
+        .blog-meta span {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+        }
+
+
+        .blog-meta a {
+            color: #52685e;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+
+        .blog-meta a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           BLOG ACTIONS
+        ========================================= */
+
+        .blog-actions {
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            padding-top: 16px;
+
+            border-top: 1px solid #e7ece9;
+        }
+
+
+        /* =========================================
+           ALL ACTION BUTTONS
+        ========================================= */
+
+        .read-button,
+        .edit-button,
+        .delete-button {
+            height: 42px;
+
+            box-sizing: border-box;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            line-height: 1;
+
+            white-space: nowrap;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition:
+                background 0.2s,
+                color 0.2s,
+                border-color 0.2s,
+                transform 0.2s;
+
+            margin: 0;
+        }
+
+
+        /* =========================================
+           READ FULL BLOG
+        ========================================= */
+
+        .read-button {
+            width: 155px;
+
+            padding: 0 18px;
+
+            background: #e8f0eb;
+
+            color: #40584b;
+
+            border: 1px solid #cfded5;
+
+            text-decoration: none;
+        }
+
+
+        .read-button:hover {
+            background: #dce8e1;
+
+            color: #354c40;
+
+            border-color: #c3d5ca;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           EDIT
+        ========================================= */
+
+        .edit-button {
+            width: 88px;
+
+            padding: 0 14px;
+
+            background: #f0f4f1;
+
+            color: #52665b;
+
+            border: 1px solid #d7e0da;
+
+            text-decoration: none;
+        }
+
+
+        .edit-button:hover {
+            background: #e3ebe6;
+
+            color: #3e5448;
+
+            border-color: #cbd8d0;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           DELETE FORM
+        ========================================= */
+
+        .delete-form {
+            width: 96px;
+
+            height: 42px;
+
+            display: inline-flex;
+
+            align-items: stretch;
+
+            justify-content: stretch;
+
+            margin: 0;
+
+            padding: 0;
+        }
+
+
+        /* =========================================
+           DELETE
+        ========================================= */
+
+        .delete-button {
+            width: 100%;
+
+            padding: 0 14px;
+
+            background: #fff7f6;
+
+            color: #a4564d;
+
+            border: 1px solid #e3c8c3;
+
+            cursor: pointer;
+        }
+
+
+        .delete-button:hover {
+            background: #fbeae7;
+
+            color: #913f37;
+
+            border-color: #d8b2ac;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           EMPTY STATE
+        ========================================= */
+
+        .empty-blogs {
+            text-align: center;
+
+            padding: 60px 25px;
+
+            border: 1px dashed #cbd6cf;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fafcfb,
+                    #fdfcf8
+                );
+        }
+
+
+        .empty-icon {
+            font-size: 45px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty-blogs h3 {
+            margin: 5px 0 10px;
+
+            font-family: Georgia, serif;
+
+            font-size: 23px;
+
+            color: #34463d;
+        }
+
+
+        .empty-blogs p {
+            max-width: 520px;
+
+            margin: 0 auto 22px;
+
+            color: #727a75;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .empty-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            background: #52685e;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .empty-button:hover {
+            background: #3d554b;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 850px) {
+
+            .search-form {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .search-form input {
+                grid-column: 1 / -1;
+            }
+
+
+            .search-form button {
+                width: 100%;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .blogs-hero {
+                padding: 30px 22px;
+            }
+
+
+            .blogs-hero h2 {
+                font-size: 27px;
+            }
+
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+
+            .search-form input {
+                grid-column: auto;
+            }
+
+
+            .blog-post {
+                padding: 18px;
+            }
+
+
+            .blog-image {
+                height: 225px;
+            }
+
+
+            .blog-meta {
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 9px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .blog-post h3 {
+                font-size: 21px;
+            }
+
+
+            .blog-image {
+                height: 190px;
+            }
+
+
+            .blog-actions {
+                align-items: stretch;
+
+                flex-direction: column;
+            }
+
+
+            .read-button,
+            .edit-button,
+            .delete-form,
+            .delete-button {
+                width: 100%;
+            }
+
+
+            .delete-form {
+                height: 42px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>My Blog</h1>
+
+    <p>
+        Stories, places & experiences
+    </p>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/blogs">
+            Blogs
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+
+        {% if session.get("user_id") %}
+
+            <a href="/create-blog">
+                Create Blog
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/bookmarks">
+                Saved
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<main class="blogs-page">
+
+
+    <!-- =====================================
+         PAGE HERO
+    ====================================== -->
+
+    <section class="blogs-hero">
+
+        <h2>
+            Explore All Blogs
+        </h2>
+
+        <p>
+            Discover travel stories, beautiful places,
+            local experiences and unforgettable journeys.
+        </p>
+
+    </section>
+
+
+
+    <!-- =====================================
+         SEARCH & FILTERS
+    ====================================== -->
+
+    <section class="search-section">
+
+
+        <h3 class="search-heading">
+            Find Your Next Story
+        </h3>
+
+
+        <form
+            method="GET"
+            action="/blogs"
+            class="search-form"
+        >
+
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                placeholder="Search blogs, authors..."
+            >
+
+
+            <select name="category">
+
+                <option value="">
+                    All Categories
+                </option>
+
+
+                <option
+                    value="Travel"
+                    {% if category == "Travel" %}selected{% endif %}
+                >
+                    Travel
+                </option>
+
+
+                <option
+                    value="Beaches"
+                    {% if category == "Beaches" %}selected{% endif %}
+                >
+                    Beaches
+                </option>
+
+
+                <option
+                    value="Mountains"
+                    {% if category == "Mountains" %}selected{% endif %}
+                >
+                    Mountains
+                </option>
+
+
+                <option
+                    value="Hill Stations"
+                    {% if category == "Hill Stations" %}selected{% endif %}
+                >
+                    Hill Stations
+                </option>
+
+
+                <option
+                    value="Historical Places"
+                    {% if category == "Historical Places" %}selected{% endif %}
+                >
+                    Historical Places
+                </option>
+
+
+                <option
+                    value="Nature & Wildlife"
+                    {% if category == "Nature & Wildlife" %}selected{% endif %}
+                >
+                    Nature & Wildlife
+                </option>
+
+
+                <option
+                    value="Cities"
+                    {% if category == "Cities" %}selected{% endif %}
+                >
+                    Cities
+                </option>
+
+
+                <option
+                    value="Food & Culture"
+                    {% if category == "Food & Culture" %}selected{% endif %}
+                >
+                    Food & Culture
+                </option>
+
+            </select>
+
+
+            <select name="sort">
+
+                <option
+                    value="newest"
+                    {% if sort == "newest" %}selected{% endif %}
+                >
+                    Newest
+                </option>
+
+
+                <option
+                    value="oldest"
+                    {% if sort == "oldest" %}selected{% endif %}
+                >
+                    Oldest
+                </option>
+
+
+                <option
+                    value="popular"
+                    {% if sort == "popular" %}selected{% endif %}
+                >
+                    Most Liked
+                </option>
+
+
+                <option
+                    value="commented"
+                    {% if sort == "commented" %}selected{% endif %}
+                >
+                    Most Commented
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                Search
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =====================================
+         RESULT INFORMATION
+    ====================================== -->
+
+    {% if search or category %}
+
+        <div class="result-info">
+
+
+            {% if search %}
+
+                Search results for:
+
+                <strong>
+                    "{{ search }}"
+                </strong>
+
+            {% endif %}
+
+
+            {% if category %}
+
+                {% if search %}
+                    &nbsp; • &nbsp;
+                {% endif %}
+
+                Category:
+
+                <strong>
+                    {{ category }}
+                </strong>
+
+            {% endif %}
+
+
+        </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================
+         BLOG LIST
+    ====================================== -->
+
+    <section>
+
+
+        {% if blogs %}
+
+
+            {% for blog in blogs %}
+
+
+                <article class="blog-post">
+
+
+                    <!-- Blog Title -->
+
+                    <h3>
+
+                        <a
+                            href="/blog/{{ blog[0] }}"
+                            class="blog-title-link"
+                        >
+                            {{ blog[1] }}
+                        </a>
+
+                    </h3>
+
+
+
+                    <!-- Blog Image -->
+
+                    {% if blog[7] %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + blog[7]
+                            ) }}"
+                            alt="{{ blog[1] }}"
+                            class="blog-image"
+                        >
+
+                    {% endif %}
+
+
+
+                    <!-- Category -->
+
+                    <span class="blog-category">
+
+                        {{ blog[6] }}
+
+                    </span>
+
+
+
+                    <!-- Blog Content -->
+
+                    <div class="blog-content">
+
+                        {{ blog[2] | safe }}
+
+                    </div>
+
+
+
+                    <!-- Blog Information -->
+
+                    <div class="blog-meta">
+
+
+                        <span>
+
+                            👤
+
+                            <a href="/author/{{ blog[4] }}">
+
+                                {{ blog[3] }}
+
+                            </a>
+
+                        </span>
+
+
+                        <span>
+
+                            ❤️
+
+                            {{ blog[8] }}
+
+                            Likes
+
+                        </span>
+
+
+                        <span>
+
+                            💬
+
+                            {{ blog[9] }}
+
+                            Comments
+
+                        </span>
+
+
+                        <span>
+
+                            🔖
+
+                            {{ blog[10] }}
+
+                            Saved
+
+                        </span>
+
+
+                        <span>
+
+                            📅
+
+                            {{ blog[5] }}
+
+                        </span>
+
+
+                    </div>
+
+
+
+                    <!-- Blog Actions -->
+
+                    <div class="blog-actions">
+
+
+                        <a
+                            href="/blog/{{ blog[0] }}"
+                            class="read-button"
+                        >
+                            Read Full Blog →
+                        </a>
+
+
+                        {% if session.get("user_id") == blog[4] %}
+
+
+                            <a
+                                href="/edit-blog/{{ blog[0] }}"
+                                class="edit-button"
+                            >
+                                ✏️ Edit
+                            </a>
+
+
+                            <form
+                                method="POST"
+                                action="/delete-blog/{{ blog[0] }}"
+                                class="delete-form"
+                                onsubmit="return confirm(
+                                    'Are you sure you want to delete this blog?'
+                                );"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                >
+                                    🗑 Delete
+                                </button>
+
+                            </form>
+
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </article>
+
+
+            {% endfor %}
+
+
+        {% else %}
+
+
+            <!-- =====================================
+                 EMPTY STATE
+            ====================================== -->
+
+            <section class="empty-blogs">
+
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+
+                <h3>
+                    No blogs found
+                </h3>
+
+
+                <p>
+                    We couldn't find any stories matching
+                    your search or selected category.
+                    Try another search or explore all blogs.
+                </p>
+
+
+                <a
+                    href="/blogs"
+                    class="empty-button"
+                >
+                    Explore All Blogs →
+                </a>
+
+
+            </section>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

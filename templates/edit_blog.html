@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Edit Blog - My Travel Blog</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        /* =====================================================
+           EDIT BLOG PAGE
+        ===================================================== */
+
+        .editor-page {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .editor-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+
+        .editor-header h2 {
+            margin-bottom: 8px;
+
+            font-family: Georgia, serif;
+
+            font-size: 32px;
+
+            color: #293a33;
+        }
+
+
+        .editor-header p {
+            margin: 0 auto;
+
+            max-width: 600px;
+
+            color: #7a837e;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .editor-label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #30463d;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        .required-mark {
+            color: #a14a58;
+        }
+
+
+        /* =====================================================
+           EDITOR CARD
+        ===================================================== */
+
+        .editor-card {
+            background: #ffffff;
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 14px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+
+        .editor-field {
+            margin-bottom: 25px;
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .title-input {
+            max-width: 100% !important;
+
+            width: 100% !important;
+
+            padding: 14px 15px !important;
+
+            font-size: 17px !important;
+
+            font-weight: 500;
+        }
+
+
+        .field-help {
+            display: block;
+
+            margin-top: 7px;
+
+            color: #8a938e;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           CATEGORY
+        ===================================================== */
+
+        .category-select {
+            max-width: 100% !important;
+
+            width: 100% !important;
+
+            padding: 13px !important;
+        }
+
+
+        /* =====================================================
+           CURRENT IMAGE
+        ===================================================== */
+
+        .current-image-box {
+            padding: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7faf8,
+                    #fbfaf5
+                );
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 11px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .current-image-label {
+            display: block;
+
+            margin-bottom: 12px;
+
+            color: #52635a;
+
+            font-size: 13px;
+
+            font-weight: bold;
+        }
+
+
+        .current-blog-image {
+            width: 100%;
+
+            max-width: 500px;
+
+            height: 280px;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 9px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* =====================================================
+           IMAGE UPLOAD
+        ===================================================== */
+
+        .image-upload-box {
+            padding: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7faf8,
+                    #fbfaf5
+                );
+
+            border: 1px dashed #c8d3cd;
+
+            border-radius: 10px;
+
+            transition:
+                border-color 0.2s ease,
+                background-color 0.2s ease;
+        }
+
+
+        .image-upload-box:hover {
+            border-color: #8fa298;
+
+            background: #f5f8f6;
+        }
+
+
+        .upload-icon {
+            font-size: 28px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .upload-title {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #30463d;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        .upload-description {
+            margin: 0 0 13px;
+
+            color: #858e89;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        .image-upload-box input[type="file"] {
+            width: 100%;
+
+            max-width: 100%;
+
+            padding: 9px;
+
+            background: white;
+
+            border: 1px solid #d4ddd8;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           CONTENT EDITOR
+        ===================================================== */
+
+        .content-textarea {
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            min-height: 360px;
+
+            padding: 16px !important;
+
+            font-size: 15px !important;
+
+            line-height: 1.8 !important;
+
+            resize: vertical;
+        }
+
+
+        .writing-tip {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 12px;
+
+            padding: 12px 14px;
+
+            background: #f7faf8;
+
+            border-left: 3px solid #80968a;
+
+            border-radius: 5px;
+
+            color: #6d7772;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+
+        .writing-tip-icon {
+            flex-shrink: 0;
+        }
+
+
+        /* =====================================================
+           UPDATE AREA
+        ===================================================== */
+
+        .update-area {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #e5e9e6;
+        }
+
+
+        .cancel-link {
+            color: #68736d;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            padding: 10px 14px;
+
+            border-radius: 7px;
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .cancel-link:hover {
+            color: #30463d;
+
+            background: #f1f4f2;
+
+            text-decoration: none;
+        }
+
+
+        .update-button {
+            background: #52685e;
+
+            padding: 12px 24px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+
+        .update-button:hover {
+            background: #3d554b;
+        }
+
+
+        /* =====================================================
+           EDIT NOTE
+        ===================================================== */
+
+        .editor-note {
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #969e9a;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .editor-header h2 {
+                font-size: 27px;
+            }
+
+
+            .editor-card {
+                padding: 20px 16px;
+            }
+
+
+            .current-blog-image {
+                height: 220px;
+            }
+
+
+            .update-area {
+                flex-direction: column-reverse;
+
+                align-items: stretch;
+            }
+
+
+            .update-button {
+                width: 100%;
+            }
+
+
+            .cancel-link {
+                text-align: center;
+            }
+
+
+            .content-textarea {
+                min-height: 280px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <h1>
+        My Blog
+    </h1>
+
+
+    <p>
+        Stories, places & experiences
+    </p>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+
+        <a href="/blogs">
+            Blogs
+        </a>
+
+
+        <a href="/about">
+            About
+        </a>
+
+
+        {% if session.get("user_id") %}
+
+            <a href="/create-blog">
+                Create Blog
+            </a>
+
+
+            <a href="/profile">
+                Profile
+            </a>
+
+
+            <a href="/bookmarks">
+                Saved
+            </a>
+
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+    <div class="editor-page">
+
+
+        <!-- =================================================
+             EDITOR HEADER
+        ================================================== -->
+
+        <div class="editor-header">
+
+            <h2>
+                Edit Your Travel Story
+            </h2>
+
+
+            <p>
+                Update your story, change its category,
+                replace the cover image or make any other
+                changes you want.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             EDITOR CARD
+        ================================================== -->
+
+        <div class="editor-card">
+
+
+            <!-- =================================================
+                 FORM
+            ================================================== -->
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+
+                <!-- =========================================
+                     BLOG TITLE
+                ========================================== -->
+
+                <div class="editor-field">
+
+                    <label
+                        for="title"
+                        class="editor-label"
+                    >
+
+                        Blog Title
+
+                        <span class="required-mark">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        class="title-input"
+                        value="{{ blog[1] }}"
+                        required
+                        placeholder="Enter your blog title..."
+                    >
+
+
+                    <small class="field-help">
+                        You can change the title of your travel story.
+                    </small>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     CATEGORY
+                ========================================== -->
+
+                <div class="editor-field">
+
+                    <label
+                        for="category"
+                        class="editor-label"
+                    >
+
+                        Category
+
+                        <span class="required-mark">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <select
+                        id="category"
+                        name="category"
+                        class="category-select"
+                        required
+                    >
+
+                        <option
+                            value="Travel"
+                            {% if blog[3] == "Travel" %}selected{% endif %}
+                        >
+                            Travel
+                        </option>
+
+
+                        <option
+                            value="Beaches"
+                            {% if blog[3] == "Beaches" %}selected{% endif %}
+                        >
+                            Beaches
+                        </option>
+
+
+                        <option
+                            value="Mountains"
+                            {% if blog[3] == "Mountains" %}selected{% endif %}
+                        >
+                            Mountains
+                        </option>
+
+
+                        <option
+                            value="Hill Stations"
+                            {% if blog[3] == "Hill Stations" %}selected{% endif %}
+                        >
+                            Hill Stations
+                        </option>
+
+
+                        <option
+                            value="Historical Places"
+                            {% if blog[3] == "Historical Places" %}selected{% endif %}
+                        >
+                            Historical Places
+                        </option>
+
+
+                        <option
+                            value="Nature & Wildlife"
+                            {% if blog[3] == "Nature & Wildlife" %}selected{% endif %}
+                        >
+                            Nature & Wildlife
+                        </option>
+
+
+                        <option
+                            value="Cities"
+                            {% if blog[3] == "Cities" %}selected{% endif %}
+                        >
+                            Cities
+                        </option>
+
+
+                        <option
+                            value="Food & Culture"
+                            {% if blog[3] == "Food & Culture" %}selected{% endif %}
+                        >
+                            Food & Culture
+                        </option>
+
+                    </select>
+
+
+                    <small class="field-help">
+                        Choose the category that best matches your story.
+                    </small>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     CURRENT IMAGE
+                ========================================== -->
+
+                {% if blog[4] %}
+
+                    <div class="editor-field">
+
+                        <div class="current-image-box">
+
+                            <span class="current-image-label">
+                                Current Cover Image
+                            </span>
+
+
+                            <img
+                                src="{{ url_for(
+                                    'static',
+                                    filename='uploads/' + blog[4]
+                                ) }}"
+                                alt="Current blog image"
+                                class="current-blog-image"
+                            >
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- =========================================
+                     NEW IMAGE
+                ========================================== -->
+
+                <div class="editor-field">
+
+                    <label
+                        for="image"
+                        class="editor-label"
+                    >
+
+                        {% if blog[4] %}
+
+                            Replace Cover Image
+
+                        {% else %}
+
+                            Add Cover Image
+
+                        {% endif %}
+
+                    </label>
+
+
+                    <div class="image-upload-box">
+
+
+                        <div class="upload-icon">
+                            📷
+                        </div>
+
+
+                        <span class="upload-title">
+
+                            {% if blog[4] %}
+
+                                Choose a new photo
+
+                            {% else %}
+
+                                Add a photo to your story
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <p class="upload-description">
+
+                            {% if blog[4] %}
+
+                                Leave this empty if you want to
+                                keep your current image.
+
+                            {% else %}
+
+                                A good travel photo makes your
+                                story more interesting.
+
+                            {% endif %}
+
+                        </p>
+
+
+                        <input
+                            type="file"
+                            id="image"
+                            name="image"
+                            accept=".jpg,.jpeg,.png,.gif,.webp"
+                        >
+
+
+                        <small class="field-help">
+                            JPG, JPEG, PNG, GIF or WEBP
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     BLOG CONTENT
+                ========================================== -->
+
+                <div class="editor-field">
+
+                    <label
+                        for="content"
+                        class="editor-label"
+                    >
+
+                        Your Story
+
+                        <span class="required-mark">
+                            *
+                        </span>
+
+                    </label>
+
+
+                    <textarea
+                        id="content"
+                        name="content"
+                        class="content-textarea"
+                        rows="14"
+                        required
+                    >{{ blog[2] }}</textarea>
+
+
+                    <div class="writing-tip">
+
+                        <span class="writing-tip-icon">
+                            💡
+                        </span>
+
+
+                        <span>
+
+                            <strong>Editing tip:</strong>
+
+                            Keep the parts of your story you
+                            love, and update anything that has
+                            changed or needs improvement.
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     UPDATE
+                ========================================== -->
+
+                <div class="update-area">
+
+
+                    <a
+                        href="/blogs"
+                        class="cancel-link"
+                    >
+
+                        ← Back to Blogs
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="update-button"
+                    >
+
+                        Update Blog ✓
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+        <p class="editor-note">
+
+            Your changes will be saved when you click
+            "Update Blog".
+
+        </p>
+
+
+    </div>
+
+</main>
+
+
+</body>
+
+</html>

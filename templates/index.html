@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Travel Blog</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header class="site-header">
+
+        <div class="header-content">
+
+
+            <!-- Website Title -->
+
+            <div class="site-logo">
+
+                <h1>
+                    My Blog
+                </h1>
+
+                <p>
+                    Stories, places & experiences
+                </p>
+
+            </div>
+
+
+
+            <!-- Navigation -->
+
+            <nav>
+
+                <a href="/">
+                    Home
+                </a>
+
+
+                <a href="/blogs">
+                    Blogs
+                </a>
+
+
+                <a href="/about">
+                    About
+                </a>
+
+
+                {% if session.get("user_id") %}
+
+                    <a href="/create-blog">
+                        Create Blog
+                    </a>
+
+
+                    <a href="/profile">
+                        Profile
+                    </a>
+
+
+                    <a href="/bookmarks">
+                        Saved
+                    </a>
+
+
+                    <a href="/logout">
+                        Logout
+                    </a>
+
+                {% else %}
+
+                    <a href="/login">
+                        Login
+                    </a>
+
+
+                    <a href="/register">
+                        Register
+                    </a>
+
+                {% endif %}
+
+            </nav>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main>
+
+
+        <!-- =====================================
+             WELCOME / HERO
+        ====================================== -->
+
+        <section class="travel-hero">
+
+
+            <div class="hero-content">
+
+
+                <span class="hero-label">
+
+                    TRAVEL • EXPLORE • DISCOVER
+
+                </span>
+
+
+                <h2>
+
+                    Welcome to My Travel Blog
+
+                </h2>
+
+
+                <p>
+
+                    Explore travel stories, beautiful
+                    destinations, beaches, mountains,
+                    historical places, food and culture.
+
+                </p>
+
+
+                <p>
+
+                    Discover new places and share your
+                    own travel experiences.
+
+                </p>
+
+
+
+                <!-- Hero Buttons -->
+
+                <div class="hero-buttons">
+
+
+                    <a
+                        href="/blogs"
+                        class="hero-button primary-button"
+                    >
+
+                        Explore Blogs
+
+                    </a>
+
+
+                    {% if session.get("user_id") %}
+
+                        <a
+                            href="/create-blog"
+                            class="hero-button secondary-button"
+                        >
+
+                            Write a Story
+
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            href="/register"
+                            class="hero-button secondary-button"
+                        >
+
+                            Join the Journey
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             LATEST BLOGS
+        ====================================== -->
+
+        <section class="latest-section">
+
+
+            <!-- Section Heading -->
+
+            <div class="section-heading">
+
+
+                <div>
+
+                    <span class="section-label">
+
+                        FROM THE JOURNAL
+
+                    </span>
+
+
+                    <h2>
+
+                        Latest Blogs
+
+                    </h2>
+
+                </div>
+
+
+
+                <a
+                    href="/blogs"
+                    class="view-all-link"
+                >
+
+                    View All →
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- Blog List -->
+
+            {% if latest_blogs %}
+
+
+                <div class="home-blog-list">
+
+
+                    {% for blog in latest_blogs %}
+
+
+                        <article class="blog-post home-blog-card">
+
+
+                            <!-- =================================
+                                 BLOG IMAGE
+                            ================================== -->
+
+                            {% if blog[6] %}
+
+                                <div class="blog-image-wrapper">
+
+                                    <img
+                                        src="{{ url_for(
+                                            'static',
+                                            filename='uploads/' + blog[6]
+                                        ) }}"
+                                        alt="{{ blog[1] }}"
+                                        class="blog-image"
+                                    >
+
+                                </div>
+
+                            {% endif %}
+
+
+
+                            <!-- =================================
+                                 BLOG CONTENT
+                            ================================== -->
+
+                            <div class="blog-card-content">
+
+
+                                <!-- Category -->
+
+                                <div class="blog-category">
+
+                                    {{ blog[5] }}
+
+                                </div>
+
+
+
+                                <!-- Blog Title -->
+
+                                <h3>
+
+                                    <a
+                                        href="/blog/{{ blog[0] }}"
+                                    >
+
+                                        {{ blog[1] }}
+
+                                    </a>
+
+                                </h3>
+
+
+
+                                <!-- Blog Content -->
+
+                                <div class="blog-content">
+
+                                    {{ blog[2] | safe }}
+
+                                </div>
+
+
+
+                                <!-- =================================
+                                     BLOG INFORMATION
+                                ================================== -->
+
+                                <div class="blog-meta">
+
+
+                                    <!-- Author -->
+
+                                    <span>
+
+                                        👤
+
+                                        {% if blog[3] %}
+
+                                            {{ blog[3] }}
+
+                                        {% else %}
+
+                                            Guest
+
+                                        {% endif %}
+
+                                    </span>
+
+
+
+                                    <!-- Likes -->
+
+                                    <span>
+
+                                        ❤️
+
+                                        {{ blog[7] }}
+
+                                        Likes
+
+                                    </span>
+
+
+
+                                    <!-- Comments -->
+
+                                    <span>
+
+                                        💬
+
+                                        {{ blog[8] }}
+
+                                        Comments
+
+                                    </span>
+
+
+
+                                    <!-- Date -->
+
+                                    <span>
+
+                                        📅
+
+                                        {{ blog[4] }}
+
+                                    </span>
+
+
+                                </div>
+
+
+
+                                <!-- =================================
+                                     READ BLOG
+                                ================================== -->
+
+                                <div class="blog-card-footer">
+
+
+                                    <a
+                                        href="/blog/{{ blog[0] }}"
+                                        class="read-more"
+                                    >
+
+                                        Read Full Blog
+
+                                        <span>
+                                            →
+                                        </span>
+
+                                    </a>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        </article>
+
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            {% else %}
+
+
+                <!-- =================================
+                     NO BLOGS
+                ================================== -->
+
+                <div class="empty-state">
+
+
+                    <div class="empty-icon">
+                        ✈️
+                    </div>
+
+
+                    <h3>
+                        No blogs available yet
+                    </h3>
+
+
+                    <p>
+                        Your travel stories will appear here
+                        once you create your first blog.
+                    </p>
+
+
+                    {% if session.get("user_id") %}
+
+                        <a
+                            href="/create-blog"
+                            class="button-link"
+                        >
+
+                            Create Your First Blog
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             TRAVEL CATEGORIES
+        ====================================== -->
+
+        <section class="travel-categories">
+
+
+            <div class="section-heading centered-heading">
+
+
+                <div>
+
+                    <span class="section-label">
+
+                        EXPLORE BY INTEREST
+
+                    </span>
+
+
+                    <h2>
+
+                        Travel Categories
+
+                    </h2>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="category-grid">
+
+
+                <!-- Beaches -->
+
+                <a
+                    href="/blogs?category=Beaches"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🏖️
+                    </span>
+
+                    <span>
+                        Beaches
+                    </span>
+
+                </a>
+
+
+
+                <!-- Mountains -->
+
+                <a
+                    href="/blogs?category=Mountains"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🏔️
+                    </span>
+
+                    <span>
+                        Mountains
+                    </span>
+
+                </a>
+
+
+
+                <!-- Hill Stations -->
+
+                <a
+                    href="/blogs?category=Hill Stations"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🌄
+                    </span>
+
+                    <span>
+                        Hill Stations
+                    </span>
+
+                </a>
+
+
+
+                <!-- Historical Places -->
+
+                <a
+                    href="/blogs?category=Historical Places"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🏛️
+                    </span>
+
+                    <span>
+                        Historical Places
+                    </span>
+
+                </a>
+
+
+
+                <!-- Nature & Wildlife -->
+
+                <a
+                    href="/blogs?category=Nature & Wildlife"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🌿
+                    </span>
+
+                    <span>
+                        Nature & Wildlife
+                    </span>
+
+                </a>
+
+
+
+                <!-- Cities -->
+
+                <a
+                    href="/blogs?category=Cities"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🌆
+                    </span>
+
+                    <span>
+                        Cities
+                    </span>
+
+                </a>
+
+
+
+                <!-- Food & Culture -->
+
+                <a
+                    href="/blogs?category=Food & Culture"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        🍜
+                    </span>
+
+                    <span>
+                        Food & Culture
+                    </span>
+
+                </a>
+
+
+
+                <!-- Travel -->
+
+                <a
+                    href="/blogs?category=Travel"
+                    class="category-card"
+                >
+
+                    <span class="category-icon">
+                        ✈️
+                    </span>
+
+                    <span>
+                        Travel
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             JOIN COMMUNITY
+        ====================================== -->
+
+        {% if not session.get("user_id") %}
+
+
+            <section class="join-community">
+
+
+                <div class="join-content">
+
+
+                    <span class="section-label">
+
+                        YOUR NEXT ADVENTURE STARTS HERE
+
+                    </span>
+
+
+                    <h2>
+
+                        Have a story to tell?
+
+                    </h2>
+
+
+                    <p>
+
+                        Create an account to publish
+                        your own travel stories, like
+                        blogs, comment and save your
+                        favourite posts.
+
+                    </p>
+
+
+
+                    <div class="join-buttons">
+
+
+                        <a
+                            href="/register"
+                            class="button-link"
+                        >
+
+                            Register Now
+
+                        </a>
+
+
+                        <a
+                            href="/login"
+                            class="text-link"
+                        >
+
+                            Already have an account? Login
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026 My Travel Blog
+            · Made for exploring the world
+
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>

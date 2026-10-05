@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login - My Blog</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+
+    <style>
+
+        /* =========================================
+           LOGIN PAGE
+        ========================================= */
+
+        .login-page {
+            max-width: 520px;
+
+            margin: 0 auto;
+
+            padding: 20px 0 40px;
+        }
+
+
+        /* =========================================
+           LOGIN HERO
+        ========================================= */
+
+        .login-hero {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .login-icon {
+            width: 68px;
+            height: 68px;
+
+            margin: 0 auto 15px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #e8f0eb;
+
+            border: 1px solid #d5e1d9;
+
+            font-size: 28px;
+        }
+
+
+        .login-hero h2 {
+            margin: 0 0 8px;
+
+            font-family: Georgia, serif;
+
+            font-size: 31px;
+
+            color: #293a32;
+        }
+
+
+        .login-hero p {
+            margin: 0;
+
+            color: #747d77;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           LOGIN CARD
+        ========================================= */
+
+        .login-card {
+            background: white;
+
+            border: 1px solid #e0e7e3;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 8px 28px rgba(
+                    0,
+                    0,
+                    0,
+                    0.055
+                );
+        }
+
+
+        /* =========================================
+           MESSAGE BOXES
+        ========================================= */
+
+        .message {
+            padding: 12px 14px;
+
+            margin-bottom: 18px;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .error-message {
+            background: #fff5f4;
+
+            border: 1px solid #e8c9c5;
+
+            color: #9b493f;
+        }
+
+
+        .success-message {
+            background: #f0f7f2;
+
+            border: 1px solid #d1e2d6;
+
+            color: #4e6b58;
+        }
+
+
+        /* =========================================
+           FORM
+        ========================================= */
+
+        .login-form {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .login-form label {
+            margin-top: 8px;
+
+            color: #3e5047;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .login-form input {
+            width: 100%;
+
+            height: 45px;
+
+            padding: 0 14px;
+
+            box-sizing: border-box;
+
+            border: 1px solid #d5ded9;
+
+            border-radius: 9px;
+
+            background: #fafcfb;
+
+            color: #35443d;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+        }
+
+
+        .login-form input:focus {
+            border-color: #52685e;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    82,
+                    104,
+                    94,
+                    0.10
+                );
+        }
+
+
+        .login-form input::placeholder {
+            color: #9aa39e;
+        }
+
+
+        /* =========================================
+           LOGIN BUTTON
+        ========================================= */
+
+        .login-button {
+            width: 100%;
+
+            height: 46px;
+
+            margin-top: 16px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #52685e;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+
+        .login-button:hover {
+            background: #40564b;
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 15px rgba(
+                    64,
+                    86,
+                    75,
+                    0.18
+                );
+        }
+
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           REGISTER LINK
+        ========================================= */
+
+        .register-section {
+            margin: 22px 0 0;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e8ecea;
+
+            text-align: center;
+
+            color: #737c76;
+
+            font-size: 14px;
+        }
+
+
+        .register-section a {
+            color: #52685e;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+
+        .register-section a:hover {
+            color: #354c40;
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           SMALL SCREEN
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .login-page {
+                padding: 10px 0 30px;
+            }
+
+
+            .login-card {
+                padding: 23px 20px;
+
+                border-radius: 15px;
+            }
+
+
+            .login-hero h2 {
+                font-size: 27px;
+            }
+
+
+            .login-icon {
+                width: 60px;
+                height: 60px;
+
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        My Blog
+    </h1>
+
+    <p>
+        Stories, places & experiences
+    </p>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/blogs">
+            Blogs
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+
+        {% if session.get("user_id") %}
+
+            <a href="/create-blog">
+                Create Blog
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/bookmarks">
+                Saved
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<main>
+
+
+    <div class="login-page">
+
+
+        <!-- =====================================
+             LOGIN HERO
+        ====================================== -->
+
+        <section class="login-hero">
+
+            <div class="login-icon">
+                🔐
+            </div>
+
+
+            <h2>
+                Welcome Back
+            </h2>
+
+
+            <p>
+                Sign in to continue your travel journey.
+            </p>
+
+        </section>
+
+
+
+        <!-- =====================================
+             LOGIN CARD
+        ====================================== -->
+
+        <section class="login-card">
+
+
+            <!-- Error -->
+
+            {% if error %}
+
+                <div class="message error-message">
+
+                    <strong>
+                        {{ error }}
+                    </strong>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- Success -->
+
+            {% if success %}
+
+                <div class="message success-message">
+
+                    <strong>
+                        {{ success }}
+                    </strong>
+
+                </div>
+
+            {% endif %}
+
+
+
+            <!-- Login Form -->
+
+            <form
+                method="POST"
+                class="login-form"
+            >
+
+
+                <label for="email">
+                    Email Address
+                </label>
+
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+
+
+                <label for="password">
+                    Password
+                </label>
+
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+                    Login
+                </button>
+
+
+            </form>
+
+
+
+            <!-- Register -->
+
+            <div class="register-section">
+
+                Don't have an account?
+
+                <a href="/register">
+                    Register here
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>About - My Travel Blog</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        /* =========================================
+           ABOUT PAGE
+        ========================================= */
+
+        .about-page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           ABOUT HERO
+        ========================================= */
+
+        .about-hero {
+            text-align: center;
+
+            padding: 45px 25px;
+
+            margin: -5px -5px 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef4f0,
+                    #f8f6ed
+                );
+
+            border: 1px solid #e2e8e4;
+
+            border-radius: 14px;
+        }
+
+
+        .about-label {
+            display: inline-block;
+
+            color: #63766c;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+        }
+
+
+        .about-hero h2 {
+            margin: 0 0 14px;
+
+            font-family: Georgia, serif;
+
+            font-size: 34px;
+
+            color: #27342f;
+        }
+
+
+        .about-hero p {
+            max-width: 650px;
+
+            margin: 0 auto;
+
+            color: #68736e;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================================
+           ABOUT CONTENT
+        ========================================= */
+
+        .about-section {
+            margin-bottom: 35px;
+        }
+
+
+        .about-section h3 {
+            margin-bottom: 10px;
+
+            font-family: Georgia, serif;
+
+            font-size: 23px;
+
+            color: #27342f;
+        }
+
+
+        .about-section p {
+            color: #626b66;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================================
+           FEATURE CARDS
+        ========================================= */
+
+        .about-features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin: 30px 0 40px;
+        }
+
+
+        .about-feature {
+            padding: 24px 18px;
+
+            text-align: center;
+
+            background: #fafbf9;
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 12px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .about-feature:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 7px 18px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .about-feature-icon {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .about-feature h4 {
+            margin: 5px 0 8px;
+
+            color: #30463d;
+
+            font-size: 16px;
+        }
+
+
+        .about-feature p {
+            margin: 0;
+
+            color: #747d78;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================
+           TECHNOLOGY SECTION
+        ========================================= */
+
+        .technology-box {
+            padding: 25px;
+
+            background: #f8faf9;
+
+            border: 1px solid #e2e8e4;
+
+            border-radius: 12px;
+        }
+
+
+        .technology-list {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+
+        .technology-tag {
+            padding: 8px 13px;
+
+            background: white;
+
+            border: 1px solid #dce4df;
+
+            border-radius: 20px;
+
+            color: #52685e;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           FINAL MESSAGE
+        ========================================= */
+
+        .about-ending {
+            margin-top: 40px;
+
+            padding: 35px 25px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #263b34,
+                    #3d554b
+                );
+
+            border-radius: 14px;
+
+            color: white;
+        }
+
+
+        .about-ending h3 {
+            margin: 0 0 10px;
+
+            color: white;
+
+            font-family: Georgia, serif;
+
+            font-size: 24px;
+        }
+
+
+        .about-ending p {
+            max-width: 600px;
+
+            margin: 0 auto;
+
+            color: #dbe4df;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .about-hero {
+                padding: 35px 20px;
+            }
+
+
+            .about-hero h2 {
+                font-size: 29px;
+            }
+
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================= -->
+
+    <header>
+
+        <h1>
+            My Blog
+        </h1>
+
+
+        <p>
+            Stories, places & experiences
+        </p>
+
+
+        <nav>
+
+            <a href="/">
+                Home
+            </a>
+
+
+            <a href="/blogs">
+                Blogs
+            </a>
+
+
+            <a href="/about">
+                About
+            </a>
+
+
+            {% if session.get("user_id") %}
+
+                <a href="/create-blog">
+                    Create Blog
+                </a>
+
+
+                <a href="/profile">
+                    Profile
+                </a>
+
+
+                <a href="/bookmarks">
+                    Saved
+                </a>
+
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="/login">
+                    Login
+                </a>
+
+
+                <a href="/register">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main>
+
+        <div class="about-page">
+
+
+            <!-- =====================================
+                 ABOUT HERO
+            ====================================== -->
+
+            <section class="about-hero">
+
+                <span class="about-label">
+                    ABOUT THE JOURNAL
+                </span>
+
+
+                <h2>
+                    Stories Beyond the Map
+                </h2>
+
+
+                <p>
+
+                    A personal travel space for discovering
+                    beautiful places, collecting experiences,
+                    and sharing stories worth remembering.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 ABOUT BLOG
+            ====================================== -->
+
+            <section class="about-section">
+
+                <h3>
+                    About My Travel Blog
+                </h3>
+
+
+                <p>
+
+                    Welcome to my travel blog — a place where
+                    I can collect travel experiences, discover
+                    interesting destinations and share stories
+                    about the places I explore.
+
+                </p>
+
+
+                <p>
+
+                    From peaceful beaches and mountain
+                    landscapes to historical places, cities,
+                    food and local culture, this journal is
+                    about discovering something new through
+                    every journey.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 FEATURES
+            ====================================== -->
+
+            <section class="about-features">
+
+
+                <div class="about-feature">
+
+                    <div class="about-feature-icon">
+                        🌍
+                    </div>
+
+
+                    <h4>
+                        Explore
+                    </h4>
+
+
+                    <p>
+
+                        Discover destinations,
+                        landscapes and interesting
+                        places.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="about-feature">
+
+                    <div class="about-feature-icon">
+                        📖
+                    </div>
+
+
+                    <h4>
+                        Share Stories
+                    </h4>
+
+
+                    <p>
+
+                        Write and publish your own
+                        travel experiences and memories.
+
+                    </p>
+
+                </div>
+
+
+
+                <div class="about-feature">
+
+                    <div class="about-feature-icon">
+                        ❤️
+                    </div>
+
+
+                    <h4>
+                        Save & Discover
+                    </h4>
+
+
+                    <p>
+
+                        Like, comment on and save
+                        blogs that you want to revisit.
+
+                    </p>
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- =====================================
+                 TECHNOLOGY
+            ====================================== -->
+
+            <section class="about-section">
+
+                <div class="technology-box">
+
+                    <h3>
+                        Built With
+                    </h3>
+
+
+                    <p>
+
+                        This website is built using a simple
+                        combination of web technologies and
+                        a database to manage travel stories,
+                        users and interactions.
+
+                    </p>
+
+
+                    <div class="technology-list">
+
+                        <span class="technology-tag">
+                            HTML
+                        </span>
+
+
+                        <span class="technology-tag">
+                            CSS
+                        </span>
+
+
+                        <span class="technology-tag">
+                            JavaScript
+                        </span>
+
+
+                        <span class="technology-tag">
+                            Python Flask
+                        </span>
+
+
+                        <span class="technology-tag">
+                            PostgreSQL
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 PURPOSE
+            ====================================== -->
+
+            <section class="about-section">
+
+                <h3>
+                    Why This Blog?
+                </h3>
+
+
+                <p>
+
+                    The purpose of this website is to create
+                    a personal space where travel stories,
+                    useful information and memorable
+                    experiences can be collected in one place.
+
+                </p>
+
+
+                <p>
+
+                    It is also a place to experiment with
+                    writing, photography, web design and
+                    building a complete website with a
+                    database behind it.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- =====================================
+                 ENDING
+            ====================================== -->
+
+            <section class="about-ending">
+
+                <h3>
+                    Every Journey Has a Story
+                </h3>
+
+
+                <p>
+
+                    Explore the blogs, discover new places,
+                    save the stories you love and keep
+                    adding your own experiences along
+                    the way.
+
+                </p>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

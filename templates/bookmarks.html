@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Saved Blogs - My Blog
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        /* =========================================
+           SAVED BLOGS PAGE
+        ========================================= */
+
+        .saved-page {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+
+        /* =========================================
+           PAGE HERO
+        ========================================= */
+
+        .saved-hero {
+            position: relative;
+
+            padding: 38px 30px;
+
+            margin-bottom: 30px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f5faf7 0%,
+                    #fbfaf5 100%
+                );
+
+            border: 1px solid #e1e8e3;
+
+            overflow: hidden;
+        }
+
+
+        .saved-hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            border-radius: 50%;
+
+            background: rgba(
+                82,
+                104,
+                94,
+                0.07
+            );
+
+            top: -100px;
+            right: -45px;
+        }
+
+
+        .saved-hero h2 {
+            position: relative;
+            z-index: 2;
+
+            margin: 0 0 8px;
+
+            font-family: Georgia, serif;
+
+            font-size: 31px;
+
+            color: #293a32;
+        }
+
+
+        .saved-hero p {
+            position: relative;
+            z-index: 2;
+
+            margin: 0;
+
+            color: #707a74;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        .saved-count {
+            display: inline-block;
+
+            position: relative;
+            z-index: 2;
+
+            margin-top: 16px;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #e8f0eb;
+
+            color: #486052;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           SAVED BLOG CARD
+        ========================================= */
+
+        .saved-blog {
+            background: white;
+
+            border: 1px solid #e1e7e3;
+
+            border-radius: 17px;
+
+            padding: 23px;
+
+            margin-bottom: 23px;
+
+            box-shadow:
+                0 5px 20px rgba(
+                    0,
+                    0,
+                    0,
+                    0.045
+                );
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+        }
+
+
+        .saved-blog:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 11px 30px rgba(
+                    0,
+                    0,
+                    0,
+                    0.075
+                );
+        }
+
+
+        .saved-blog:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================================
+           BLOG TITLE
+        ========================================= */
+
+        .saved-blog h3 {
+            margin: 0 0 13px;
+        }
+
+
+        .saved-blog h3 a {
+            color: #2d4237;
+
+            text-decoration: none;
+
+            font-family: Georgia, serif;
+
+            font-size: 24px;
+
+            line-height: 1.35;
+
+            transition: color 0.2s;
+        }
+
+
+        .saved-blog h3 a:hover {
+            color: #52685e;
+        }
+
+
+        /* =========================================
+           IMAGE
+        ========================================= */
+
+        .saved-blog-image {
+            width: 100%;
+
+            height: 290px;
+
+            object-fit: cover;
+
+            border-radius: 12px;
+
+            margin: 5px 0 18px;
+
+            display: block;
+        }
+
+
+        /* =========================================
+           CATEGORY
+        ========================================= */
+
+        .saved-category {
+            display: inline-block;
+
+            padding: 5px 11px;
+
+            margin-bottom: 14px;
+
+            border-radius: 20px;
+
+            background: #e9f0eb;
+
+            color: #486052;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           CONTENT
+        ========================================= */
+
+        .saved-content {
+            color: #59635d;
+
+            font-size: 15px;
+
+            line-height: 1.75;
+
+            max-height: 115px;
+
+            overflow: hidden;
+
+            margin-bottom: 17px;
+        }
+
+
+        /* =========================================
+           BLOG META
+        ========================================= */
+
+        .saved-meta {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            align-items: center;
+
+            gap: 16px;
+
+            padding: 14px 0;
+
+            border-top: 1px solid #e7ece9;
+
+            color: #737c76;
+
+            font-size: 13px;
+        }
+
+
+        .saved-meta span {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 4px;
+        }
+
+
+        /* =========================================
+           AUTHOR
+        ========================================= */
+
+        .saved-author {
+            margin-bottom: 15px;
+
+            color: #68726c;
+
+            font-size: 14px;
+        }
+
+
+        .saved-author strong {
+            color: #3d4943;
+        }
+
+
+        .saved-author a {
+            color: #52685e;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+
+        .saved-author a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           ACTION AREA
+        ========================================= */
+
+        .saved-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding-top: 15px;
+
+            border-top: 1px solid #e7ece9;
+        }
+
+
+        .read-blog-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 37px;
+
+            padding: 0 17px;
+
+            border-radius: 9px;
+
+            background: #52685e;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .read-blog-button:hover {
+            background: #3d554b;
+
+            transform: translateY(-1px);
+        }
+
+
+        .saved-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 37px;
+
+            padding: 0 13px;
+
+            border-radius: 9px;
+
+            background: #f4f7f5;
+
+            border: 1px solid #e0e7e2;
+
+            color: #657169;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           EMPTY STATE
+        ========================================= */
+
+        .empty-saved {
+            text-align: center;
+
+            padding: 60px 25px;
+
+            border: 1px dashed #cbd6cf;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fafcfb,
+                    #fdfcf8
+                );
+        }
+
+
+        .empty-icon {
+            font-size: 48px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .empty-saved h3 {
+            margin: 5px 0 10px;
+
+            font-family: Georgia, serif;
+
+            font-size: 23px;
+
+            color: #34463d;
+        }
+
+
+        .empty-saved p {
+            max-width: 520px;
+
+            margin: 0 auto 22px;
+
+            color: #727a75;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .browse-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            background: #52685e;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .browse-button:hover {
+            background: #3d554b;
+
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 700px) {
+
+            .saved-hero {
+                padding: 30px 22px;
+            }
+
+
+            .saved-hero h2 {
+                font-size: 27px;
+            }
+
+
+            .saved-blog {
+                padding: 18px;
+            }
+
+
+            .saved-blog-image {
+                height: 225px;
+            }
+
+
+            .saved-meta {
+                gap: 10px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .saved-hero h2 {
+                font-size: 25px;
+            }
+
+
+            .saved-blog h3 a {
+                font-size: 21px;
+            }
+
+
+            .saved-blog-image {
+                height: 190px;
+            }
+
+
+            .saved-meta {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .saved-actions {
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>My Blog</h1>
+
+    <p>
+        Stories, places & experiences
+    </p>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/blogs">
+            Blogs
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+
+        {% if session.get("user_id") %}
+
+            <a href="/create-blog">
+                Create Blog
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/bookmarks">
+                Saved
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+
+<main class="saved-page">
+
+
+    <!-- =====================================
+         SAVED PAGE HERO
+    ====================================== -->
+
+    <section class="saved-hero">
+
+        <h2>
+            🔖 My Saved Blogs
+        </h2>
+
+        <p>
+            Keep your favourite travel stories in one place
+            and come back to them whenever you want.
+        </p>
+
+
+        {% if blogs %}
+
+            <span class="saved-count">
+
+                {{ blogs|length }}
+
+                {% if blogs|length == 1 %}
+                    saved story
+                {% else %}
+                    saved stories
+                {% endif %}
+
+            </span>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================
+         SAVED BLOGS
+    ====================================== -->
+
+    {% if blogs %}
+
+
+        {% for blog in blogs %}
+
+
+            <article class="saved-blog">
+
+
+                <!-- Blog Title -->
+
+                <h3>
+
+                    <a href="/blog/{{ blog[0] }}">
+
+                        {{ blog[1] }}
+
+                    </a>
+
+                </h3>
+
+
+
+                <!-- Blog Image -->
+
+                {% if blog[7] %}
+
+                    <img
+                        src="{{ url_for(
+                            'static',
+                            filename='uploads/' + blog[7]
+                        ) }}"
+                        alt="{{ blog[1] }}"
+                        class="saved-blog-image"
+                    >
+
+                {% endif %}
+
+
+
+                <!-- Category -->
+
+                <span class="saved-category">
+
+                    {{ blog[6] }}
+
+                </span>
+
+
+
+                <!-- Blog Content -->
+
+                <div class="saved-content">
+
+                    {{ blog[2] | safe }}
+
+                </div>
+
+
+
+                <!-- Author -->
+
+                <div class="saved-author">
+
+                    <strong>
+                        Author:
+                    </strong>
+
+                    <a href="/author/{{ blog[4] }}">
+
+                        {{ blog[3] }}
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- Statistics -->
+
+                <div class="saved-meta">
+
+                    <span>
+                        ❤️ {{ blog[8] }} likes
+                    </span>
+
+                    <span>
+                        💬 {{ blog[9] }} comments
+                    </span>
+
+                    <span>
+
+                        📅
+
+                        {{ blog[5].strftime(
+                            '%B %d, %Y'
+                        ) }}
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- Actions -->
+
+                <div class="saved-actions">
+
+                    <a
+                        href="/blog/{{ blog[0] }}"
+                        class="read-blog-button"
+                    >
+                        Read Blog →
+                    </a>
+
+
+                    <span class="saved-label">
+                        🔖 Saved
+                    </span>
+
+                </div>
+
+
+            </article>
+
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <!-- =================================
+             EMPTY STATE
+        ================================== -->
+
+        <section class="empty-saved">
+
+
+            <div class="empty-icon">
+                🔖
+            </div>
+
+
+            <h3>
+                Your saved stories will appear here
+            </h3>
+
+
+            <p>
+                Found a travel story you want to remember?
+                Save it from the blog page and it will
+                be waiting for you here.
+            </p>
+
+
+            <a
+                href="/blogs"
+                class="browse-button"
+            >
+                Explore Blogs →
+            </a>
+
+
+        </section>
+
+
+    {% endif %}
+
+
+</main>
+
+
+</body>
+
+</html>

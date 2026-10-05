@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {{ author[1] }} - My Blog
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .author-blog-image {
+            width: 100%;
+            max-width: 700px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .blog-content {
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+    <h1>My Blog</h1>
+
+    <p>
+        Stories, places & experiences
+    </p>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/blogs">
+            Blogs
+        </a>
+
+        <a href="/about">
+            About
+        </a>
+
+
+        {% if session.get("user_id") %}
+
+            <a href="/create-blog">
+                Create Blog
+            </a>
+
+            <a href="/profile">
+                Profile
+            </a>
+
+            <a href="/bookmarks">
+                Saved
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<main>
+
+
+    <!-- ============================= -->
+    <!-- AUTHOR PROFILE -->
+    <!-- ============================= -->
+
+    <section class="blog-post">
+
+        <h2>
+            Author Profile
+        </h2>
+
+
+        {% if author[2] %}
+
+            <p>
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='uploads/' + author[2]
+                    ) }}"
+                    alt="Profile Picture"
+                    width="120"
+                    height="120"
+                >
+
+            </p>
+
+        {% endif %}
+
+
+        <h3>
+            {{ author[1] }}
+        </h3>
+
+
+        <p>
+
+            <strong>
+                Username:
+            </strong>
+
+            {{ author[1] }}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Total Blogs:
+            </strong>
+
+            {{ blog_count }}
+
+        </p>
+
+
+        <p>
+
+            <strong>
+                Total Likes:
+            </strong>
+
+            {{ like_count }}
+
+        </p>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- AUTHOR'S BLOGS -->
+    <!-- ============================= -->
+
+    <section>
+
+        <h2>
+            Blogs by {{ author[1] }}
+        </h2>
+
+
+        {% if author_blogs %}
+
+            {% for blog in author_blogs %}
+
+                <article class="blog-post">
+
+
+                    <h3>
+
+                        <a
+                            href="/blog/{{ blog[0] }}"
+                        >
+                            {{ blog[1] }}
+                        </a>
+
+                    </h3>
+
+
+                    <!-- BLOG IMAGE -->
+
+                    {% if blog[5] %}
+
+                        <img
+                            src="{{ url_for(
+                                'static',
+                                filename='uploads/' + blog[5]
+                            ) }}"
+                            alt="{{ blog[1] }}"
+                            class="author-blog-image"
+                        >
+
+                    {% endif %}
+
+
+                    <!-- CATEGORY -->
+
+                    <p>
+
+                        <strong>
+                            Category:
+                        </strong>
+
+                        {{ blog[3] }}
+
+                    </p>
+
+
+                    <!-- BLOG CONTENT -->
+
+                    <div class="blog-content">
+
+                        {{ blog[2] | safe }}
+
+                    </div>
+
+
+                    <!-- BLOG STATS -->
+
+                    <p>
+
+                        ❤️ Likes:
+                        {{ blog[6] }}
+
+                        &nbsp;&nbsp;
+
+                        💬 Comments:
+                        {{ blog[7] }}
+
+                    </p>
+
+
+                    <!-- DATE -->
+
+                    <p>
+
+                        <small>
+
+                            Published:
+
+                            {{ blog[4].strftime(
+                                '%B %d, %Y'
+                            ) }}
+
+                        </small>
+
+                    </p>
+
+
+                    <p>
+
+                        <a
+                            href="/blog/{{ blog[0] }}"
+                        >
+                            Read Blog →
+                        </a>
+
+                    </p>
+
+
+                </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                This author has not published any blogs yet.
+            </p>
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>
